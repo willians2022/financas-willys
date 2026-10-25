@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f172a">
+  <title>Willys Finanças | Planejamento Financeiro</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Modal / Ecrã Inicial -->
+  <div id="welcomeModal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="brand-mark modal-brand">W</div>
+      <h2>Bem-vindo ao Willys Finanças</h2>
+      <p>Informe o seu salário bruto e quanto já tem guardado para calcularmos o seu saldo real:</p>
+      <label>
+        Salário bruto (R$)
+        <input id="modalGrossSalary" type="number" min="0" step="0.01" placeholder="Ex: 3500,00">
+      </label>
+      <label>
+        Quanto você já tem guardado? (R$)
+        <input id="modalSaved" type="number" min="0" step="0.01" placeholder="Ex: 1000,00">
+      </label>
+      <button id="applyModalBtn" class="button" type="button">Aplicar e Começar</button>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="brand-mark">W</div>
+    <div>
+      <p class="eyebrow">WILLYS TECNOLOGIA IoT</p>
+      <h1>Willys Finanças</h1>
+      <p class="subtitle">Seu dinheiro com propósito.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="intro">
+      <div>
+        <span class="pill">PLANEJAMENTO PESSOAL</span>
+        <h2>Organize hoje.<br><span>Construa seu futuro.</span></h2>
+        <p>Calcule seu salário líquido real, planeje sua reserva e acompanhe sua meta de renda passiva.</p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">01 / SUA RENDA REAL</p>
+          <h2>Dados mensais</h2>
+        </div>
+      </div>
+      <div class="form-grid">
+        <label>Salário bruto (R$)
+          <input id="grossSalary" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label>Desconto de INSS (R$)
+          <input id="inss" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label>Vale-transporte / condução (R$)
+          <input id="transport" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label>Imposto de Renda / IRRF (R$)
+          <input id="otherDeductions" type="number" min="0" step="0.01" value="0">
+        </label>
+        <label>Despesas essenciais mensais (R$)
+          <input id="essentials" type="number" min="0" step="0.01" value="0">
+          <small>Use o total real de moradia, alimentação, contas e necessidades.</small>
+        </label>
+        <label>Quanto já tem guardado (R$)
+          <input id="saved" type="number" min="0" step="0.01" value="0">
+        </label>
+      </div>
+      <div class="net-card">
+        <span>Salário líquido / Saldo mensal real</span>
+        <strong id="netSalary">R$ 0,00</strong>
+        <small>Calculado automaticamente considerando deduções reais de INSS, IRRF e VT.</small>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 / DISTRIBUIÇÃO</p>
+          <h2>Fórmulas do seu plano</h2>
+        </div>
+        <button id="resetBtn" class="button secondary" type="button">Zerar / Limpar Tudo</button>
+      </div>
+      <p class="helper">Altere os percentuais conforme sua realidade. Os cálculos usam o saldo mensal líquido real.</p>
+      <div class="form-grid compact">
+        <label>Gastos fixos (%)
+          <input id="fixedPct" type="number" min="0" max="100" step="1" value="50">
+        </label>
+        <label>Meta de renda passiva / investimento (%)
+          <input id="passivePct" type="number" min="0" max="100" step="1" value="50">
+        </label>
+        <label>Investimentos adicionais (%)
+          <input id="investPct" type="number" min="0" max="100" step="1" value="20">
+        </label>
+        <label>Lazer (%)
+          <input id="leisurePct" type="number" min="0" max="100" step="1" value="30">
+        </label>
+        <label>Reserva de emergência (meses)
+          <input id="reserveMonths" type="number" min="1" max="24" step="1" value="6">
+        </label>
+        <label>Quanto pretende investir por mês (R$)
+          <input id="monthlyContribution" type="number" min="0" step="0.01" value="0">
+          <small>Usado para estimar o tempo até a meta.</small>
+        </label>
+      </div>
+      <div class="notice" id="overlapNotice">
+        Atenção: as categorias são simulações independentes e podem se sobrepor.
+      </div>
+    </section>
+
+    <section class="results">
+      <article class="metric">
+        <span>Gastos fixos (referência)</span>
+        <strong id="fixedValue">R$ 0,00</strong>
+        <small>Salário líquido × percentual</small>
+      </article>
+      <article class="metric">
+        <span>Meta mensal para renda passiva</span>
+        <strong id="passiveValue">R$ 0,00</strong>
+        <small>Valor-alvo de aporte</small>
+      </article>
+      <article class="metric">
+        <span>Investimentos adicionais</span>
+        <strong id="investValue">R$ 0,00</strong>
+        <small>Salário líquido × percentual</small>
+      </article>
+      <article class="metric">
+        <span>Lazer (referência)</span>
+        <strong id="leisureValue">R$ 0,00</strong>
+        <small>Salário líquido × percentual</small>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">03 / SEGURANÇA</p>
+          <h2>Reserva de emergência</h2>
+        </div>
+      </div>
+      <div class="reserve-grid">
+        <div class="reserve-main">
+          <span>Meta da reserva</span>
+          <strong id="reserveTarget">R$ 0,00</strong>
+          <p id="reserveDescription">0 meses de despesas essenciais.</p>
+          <div class="progress-track"><div id="reserveProgress" class="progress-fill"></div></div>
+          <small id="reserveStatus">Informe suas despesas essenciais.</small>
+        </div>
+        <div class="reserve-side">
+          <span>Já guardado</span>
+          <strong id="savedDisplay">R$ 0,00</strong>
+          <span>Falta para a meta</span>
+          <strong id="remainingReserve">R$ 0,00</strong>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">04 / OBJETIVO</p>
+          <h2>Simulador de renda passiva</h2>
+        </div>
+      </div>
+      <div class="form-grid">
+        <label>Renda passiva desejada por mês (R$)
+          <input id="desiredIncome" type="number" min="0" step="50" value="0">
+        </label>
+        <label>Rentabilidade líquida hipotética (% ao mês)
+          <input id="monthlyRate" type="number" min="0" max="5" step="0.1" value="0.5">
+          <small>Hipótese para simulação, sem garantia de retorno.</small>
+        </label>
+      </div>
+      <div class="goal-grid">
+        <div class="goal-card">
+          <span>Patrimônio estimado necessário</span>
+          <strong id="requiredCapital">R$ 0,00</strong>
+        </div>
+        <div class="goal-card">
+          <span>Tempo estimado até a meta</span>
+          <strong id="timeToGoal">—</strong>
+          <small id="timeDetails">Com o aporte mensal informado.</small>
+        </div>
+      </div>
+      <p class="disclaimer">Simulação educativa. Rentabilidade, impostos e inflação variam.</p>
+    </section>
+
+    <footer>
+      <p><strong>Willys Finanças</strong> · Ferramenta pessoal de planejamento</p>
+      <p>Seus dados ficam salvos de forma local no seu navegador.</p>
+    </footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
